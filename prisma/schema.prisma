@@ -1,0 +1,96 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+enum MessageType {
+    CAST_ADD
+    CAST_REMOVE
+    REACTION_ADD
+    REACTION_REMOVE
+    LINK_ADD
+    LINK_REMOVE
+    LINK_COMPACT_STATE
+    VERIFICATION_ADD_ETH_ADDRESS
+    VERIFICATION_REMOVE
+    USER_DATA_ADD
+    USERNAME_PROOF
+    FRAME_ACTION
+}
+
+model Message {
+    hash       String      @id
+    fid        Int
+    type       MessageType
+    timestamp  Int
+    network    Int
+    signer     String
+    hashScheme String?
+    signature  String?
+    sigScheme  String?
+    raw        Bytes?
+    createdAt  DateTime    @default(now())
+
+    Cast         Cast?
+    Reaction     Reaction?
+    Link         Link?
+    Verification Verification?
+    UserData     UserData?
+
+    @@index([fid, timestamp])
+    @@index([type, timestamp])
+}
+
+model Cast {
+    messageHash String  @id
+    message     Message @relation(fields: [messageHash], references: [hash], onDelete: Cascade)
+    fid         Int
+    timestamp   Int
+    body        Json
+
+    @@index([fid, timestamp])
+}
+
+model Reaction {
+    messageHash String  @id
+    message     Message @relation(fields: [messageHash], references: [hash], onDelete: Cascade)
+    fid         Int
+    timestamp   Int
+    body        Json
+
+    @@index([fid, timestamp])
+}
+
+model Link {
+    messageHash String  @id
+    message     Message @relation(fields: [messageHash], references: [hash], onDelete: Cascade)
+    fid         Int
+    timestamp   Int
+    body        Json
+
+    @@index([fid, timestamp])
+}
+
+model Verification {
+    messageHash String  @id
+    message     Message @relation(fields: [messageHash], references: [hash], onDelete: Cascade)
+    fid         Int
+    timestamp   Int
+    body        Json
+
+    @@index([fid, timestamp])
+}
+
+model UserData {
+    messageHash String  @id
+    message     Message @relation(fields: [messageHash], references: [hash], onDelete: Cascade)
+    fid         Int
+    timestamp   Int
+    body        Json
+
+    @@index([fid, timestamp])
+}
