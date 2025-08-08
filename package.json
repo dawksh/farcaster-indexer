@@ -1,24 +1,10 @@
 {
-  "name": "snapchain-indexer",
+  "name": "farcaster-indexer",
   "module": "index.ts",
   "type": "module",
   "private": true,
-  "scripts": {
-    "dev": "bun run --watch src/index.ts",
-    "start": "bun run src/index.ts",
-    "db:generate": "prisma generate",
-    "db:push": "prisma db push",
-    "db:migrate": "prisma migrate dev",
-    "db:studio": "prisma studio"
-  },
-  "dependencies": {
-    "@prisma/client": "^5.7.1",
-    "redis": "^4.6.12",
-    "dotenv": "^16.3.1"
-  },
   "devDependencies": {
-    "@types/bun": "latest",
-    "prisma": "^5.7.1"
+    "@types/bun": "latest"
   },
   "peerDependencies": {
     "typescript": "^5"

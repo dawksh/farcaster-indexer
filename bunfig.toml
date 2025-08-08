@@ -1,6 +1,0 @@
-[install]
-cache = true
-exact = false
-
-[test]
-preload = ["./src/test-setup.ts"] 
