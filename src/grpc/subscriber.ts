@@ -45,8 +45,10 @@ export const startSubscriber = async (onMessage: OnMessage) => {
   const endpoint = process.env.SNAPCHAIN_GRPC_ENDPOINT as string;
   const insecure = process.env.SNAPCHAIN_GRPC_INSECURE === "true";
   const maxRecv = 10 * 1024 * 1024;
+  const maxSend = 1 * 1024 * 1024;
   const clientOptions: any = {
     "grpc.max_receive_message_length": maxRecv,
+    "grpc.max_send_message_length": maxSend,
   };
   const client: HubRpcClient = insecure
     ? getInsecureHubRpcClient(endpoint, clientOptions)
@@ -120,7 +122,6 @@ export const startSubscriber = async (onMessage: OnMessage) => {
 
   const subscribeResult = await client.subscribe({
     eventTypes,
-    fromId: 187069513732,
   });
 
   if (subscribeResult.isOk()) {
